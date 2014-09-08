@@ -1,6 +1,7 @@
 ﻿namespace ChunkBy
 
 open System
+open System.Collections.Generic
 
 module MyList =
     let chunkBy (keySelector : ('T -> 'Key)) (source : 'T list) : ('Key * 'T list) list =
@@ -21,27 +22,22 @@ module MyArray =
     let chunkBy (keySelector : ('T -> 'Key)) (source : 'T[]) : ('Key * 'T[]) [] =
         if source.Length = 0 then [||]
         else
-            let inline rev arr =
-                let result = arr |> List.toArray
-                Array.Reverse(result)
-                result
-
             let mutable prevKey = keySelector source.[0]
-            let mutable currElements = [ source.[0] ]
-            let mutable result = []
+            let mutable currElements = new List<'T>()
+            currElements.Add(source.[0])
+            let result = new List<'Key * 'T[]>()
 
             for pos = 1 to source.Length - 1 do
                 let currKey = keySelector source.[pos]
-                if (currKey = prevKey) then currElements <- source.[pos] :: currElements
+                if (currKey = prevKey) then currElements.Add(source.[pos])
                 else
-                    result <- (prevKey, rev currElements) :: result
+                    result.Add((prevKey, currElements.ToArray()))
                     prevKey <- currKey
-                    currElements <- [ source.[pos] ]
+                    currElements.Clear()
+                    currElements.Add(source.[pos])
 
-            result <- (prevKey, rev currElements) :: result
-            let resultArr = result |> List.toArray
-            Array.Reverse(resultArr)
-            resultArr
+            result.Add((prevKey, currElements.ToArray()))
+            result.ToArray()
 
 module MySeq =
     let chunkBy (keySelector : ('T -> 'Key)) (source : seq<'T>) : seq<('Key * seq<'T>)> =
