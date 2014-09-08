@@ -16,7 +16,7 @@ type List_chunkBy_Tests() =
         Assert.AreEqual([ (0, [ 0 ]) ], result)
 
     [<TestMethod>]
-    member this.``given list with several elements yielding same key returns list with 1 tuple and all elements in list``() =
+    member this.``given list with several elements all yielding same key returns list with 1 tuple and all elements in list``() =
         let result = MyList.chunkBy (fun x -> x % 2) [ 3; 5; 7 ]
         Assert.AreEqual([ (1, [ 3; 5; 7 ]) ], result)
 
@@ -48,7 +48,7 @@ type Array_chunkBy_Tests() =
         Assert.IsTrue((result = [| (0, [| 0 |]) |]))
 
     [<TestMethod>]
-    member this.``given array with several elements yielding same key returns array with 1 tuple and all elements in array``() =
+    member this.``given array with several elements all yielding same key returns array with 1 tuple and all elements in array``() =
         let result = MyArray.chunkBy (fun x -> x % 2) [| 3; 5; 7 |]
         Assert.IsTrue((result = [| (1, [| 3; 5; 7 |]) |]))
 
@@ -86,7 +86,7 @@ type Seq_chunkBy_Tests() =
         Assert.IsTrue((result = expected))
 
     [<TestMethod>]
-    member this.``given seq with several elements yielding same key returns seq with 1 tuple and all elements in seq``() =
+    member this.``given seq with several elements all yielding same key returns seq with 1 tuple and all elements in seq``() =
         let result = MySeq.chunkBy (fun x -> x % 2) (seq { yield 3; yield 5; yield 7 }) |> deepEnumerate
         let expected = seq { yield (1, seq { yield 3; yield 5; yield 7 }) } |> deepEnumerate
         Assert.IsTrue((result = expected))
