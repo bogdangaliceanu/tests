@@ -1,0 +1,55 @@
+﻿# NuGet
+!.nuget/*
+[Pp]ackages/*
+![Pp]ackages/repositories.config
+
+# .NET / Visual Studio (Folders)
+ipch/
+obj/
+[Bb]in
+[Dd]ebug*/
+[Rr]elease*/
+
+# .NET / Visual Studio (Files)
+*_i.c
+*_p.c
+*.aps
+*.bak
+*.[Cc]ache
+*.exe
+*.gpState
+*.ilk
+*.log
+*.lib
+*.ncb
+*.[Oo]bj
+*.opensdf
+*.pch
+*.pdb
+*.res
+*.resources
+*.sbr
+*.sdf
+*.sln.cache
+*.suo
+*.tlb
+*.tlh
+*.user
+*.vspscc
+*.vssscc
+
+# Visual Studio (Project Upgrade)
+Backup/
+_UpgradeReport_Files/
+UpgradeLog.htm
+UpgradeLog.XML
+
+# Test Results
+[Tt]est[Rr]esult*
+TestResults/
+TestResult.xml
+
+
+# Build Output
+pkg
+[Bb]uild
