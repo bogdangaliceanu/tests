@@ -4,19 +4,19 @@ open System
 open System.Collections.Generic
 
 module MyList =
-    let chunkBy (keySelector : ('T -> 'Key)) (source : 'T list) : ('Key * 'T list) list =
-        let rec chunkByTR source totalAcc chunkAcc prevKey =
-            match source with
-            | [] -> ((prevKey, chunkAcc |> List.rev) :: totalAcc) |> List.rev
-            | hd :: tl ->
-                let currKey = keySelector hd
-                if currKey = prevKey then
-                    chunkByTR tl totalAcc (hd :: chunkAcc) prevKey
-                else
-                    chunkByTR tl ((prevKey, chunkAcc |> List.rev) :: totalAcc) [ hd ] currKey
+    let rec private chunkByTR keySelector source totalAcc chunkAcc prevKey =
+        match source with
+        | [] -> ((prevKey, chunkAcc |> List.rev) :: totalAcc) |> List.rev
+        | hd :: tl ->
+            let currKey = keySelector hd
+            if currKey = prevKey then
+                chunkByTR keySelector tl totalAcc (hd :: chunkAcc) prevKey
+            else
+                chunkByTR keySelector tl ((prevKey, chunkAcc |> List.rev) :: totalAcc) [ hd ] currKey
 
+    let chunkBy (keySelector : ('T -> 'Key)) (source : 'T list) : ('Key * 'T list) list =
         if source.IsEmpty then []
-        else chunkByTR source [] [] (keySelector source.[0])
+        else chunkByTR keySelector source [] [] (keySelector source.[0])
     
 module MyArray =
     let chunkBy (keySelector : ('T -> 'Key)) (source : 'T[]) : ('Key * 'T[]) [] =
